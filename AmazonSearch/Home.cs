@@ -15,7 +15,7 @@ namespace AmazonSearch
 		{
 			this.driver = driver;
 			this.driver.Navigate().GoToUrl("https://www.amazon.com/?language=en_US&currency=USD");
-			//web1.Manage().Window.Maximize();
+			this.driver.Manage().Window.Maximize();
 		}
 
 		public SearchBar SearchBar 

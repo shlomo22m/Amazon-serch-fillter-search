@@ -58,6 +58,15 @@ namespace AmazonSearch
 			return driver;
 		}
 
+		public void CloseAllDrivers()
+		{
+			foreach (var key in Drivers.Keys)
+			{
+				Drivers[key].Close();
+				Drivers[key].Quit();
+			}
+		}
+
 	}
 }
 
