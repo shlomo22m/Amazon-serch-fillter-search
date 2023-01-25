@@ -5,12 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AmazonSearch
 {
 	internal class Results
 	{
-		//IList<IWebElement> elements = new IList<IWebElement>();
+		//private List<IWebElement> elements = new List<IWebElement>();
 		private string xpath = "//div[@class='a-section a-spacing-small a-spacing-top-small'";
 		private IWebDriver driver;
 		public Results(IWebDriver driver) 
@@ -18,31 +19,38 @@ namespace AmazonSearch
 			this.driver = driver;
 		}
 
-		public void  GetResultBy(Dictionary<string,string> filter) 
+		public List<Item> GetResultBy(Dictionary<string,string> filter) 
 		{
-			//string xpath = "//div[@class='a-section a-spacing-small a-spacing-top-small'";
+			//preform our fillter search
 			foreach (var filterxpath in filter)
 			{
 				switch (filterxpath.Key)
 				{
 					case "Price_Lower_Then":
-						xpath += "and descendant::span[@class = 'a-price-whole' and text() >="+ filterxpath.Value;
+						xpath += "and concat(concat(descendant::span[@class='a-price-whole'], descendant::span[class='a-price-decimal']), descendant::span[@class='a-price-fraction']) <" + filterxpath.Value;
 						break;
 					case "Price_Hiegher_OR_Equal_Then":
-						xpath += "and text()>="+ filterxpath.Value;
+						xpath += "and concat(concat(descendant::span[@class='a-price-whole'], descendant::span[class='a-price-decimal']),descendant::span[@class='a-price-fraction']) >=" + filterxpath.Value;
 						break;
 					case "Free_Shipping":
-						if (filterxpath.Value == "true") xpath += "]and descendant::span[contains(text(), 'FREE')]";
+						if (filterxpath.Value == "true") xpath += " and descendant::span[contains(text(), 'FREE')]";
 						break;
 				}
 			}
-			xpath += "]";
+			xpath += "]";    
+			
 
-			 List<IWebElement> elements = driver.FindElements(By.XPath(xpath)).ToList();
+			List<IWebElement> elements = driver.FindElements(By.XPath(xpath)).ToList();
+			List<Item> items = new List<Item>();
+
 			foreach (IWebElement element in elements)
 			{
-				Console.WriteLine(element.Text);
+				//the the title and the price and add it to the list
+				string title = element.FindElement(By.CssSelector(".a-size-medium.a-color-base.a-text-normal")).Text;
+				string price = element.FindElement(By.CssSelector(".a-price-whole")).Text + '.' + element.FindElement(By.CssSelector(".a-price-fraction")).Text + '$';
+				items.Add(new Item(title, price));
 			}
+			return items;
 		}
 
 	}

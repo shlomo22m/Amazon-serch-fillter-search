@@ -26,12 +26,14 @@ namespace AmazonSearch
 		{
 			set
 			{
+				//put the product we want to search
 				this.driver.FindElement(By.Id("twotabsearchtextbox")).SendKeys(value);
 			}
 		}
 
 		public void Click()
 		{
+			//click to search
 			this.driver.FindElement(By.Id("nav-search-submit-button")).Click();
 		}
 

@@ -16,8 +16,9 @@ namespace AmazonSearch
 	public class Tests
 	{
 		List<IWebElement> mouses = new List<IWebElement>();
-		BrowserFactory chromedriver = new BrowserFactory();
-		IWebDriver drive1;
+		BrowserFactory browserFactory = new BrowserFactory();
+		IWebDriver chrome;
+		IWebDriver edge;
 		Amazon amazon;
 		new Dictionary<string, string> itemfilter = new Dictionary<string, string>();
 
@@ -26,23 +27,36 @@ namespace AmazonSearch
 		[SetUp]
 		public void Setup()
 		{
-			
-			drive1 = chromedriver.InitBrowser("Chrome");
-			amazon = new Amazon(drive1);
-			itemfilter.Add("Price_Lower_Then", "100");
-			itemfilter.Add("Price_Hiegher_OR_Equal_Then", "50");
-			itemfilter.Add("Free_Shipping", "true");
+			chrome = browserFactory.InitBrowser("Chrome");
+			//edge = browserFactory.InitBrowser("Edge");
+			edge = browserFactory.Drivers["Chrome"];
+			amazon = new Amazon(chrome);
+
 
 		}
 
 		[Test]
 		public void Test1()
 		{
-
+			
+			//search product
 			amazon.Pages.Home.SearchBar.Text = "mouse";
 			amazon.Pages.Home.SearchBar.Click();
-			amazon.Pages.Results.GetResultBy(itemfilter);
+
+			//creat a result list after filltering
+			List<Item> items =amazon.Pages.Results.GetResultBy(new Dictionary<string, string>() {
+				{ "Price_Lower_Then", "100" },{"Price_Hiegher_OR_Equal_Then", "10" },{"Free_Shipping", "true"}});
+
+			foreach (Item item in items)
+			{
+				Console.WriteLine(item.Title);
+				Console.WriteLine(item.Price + "\n");
+			}
+			Assert.Pass();
 
 		}
+
+
+
 	}
 }

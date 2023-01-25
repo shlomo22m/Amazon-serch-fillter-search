@@ -14,7 +14,7 @@ namespace AmazonSearch
 		public Home(IWebDriver driver)
 		{
 			this.driver = driver;
-			this.driver.Navigate().GoToUrl("https://www.amazon.com/");
+			this.driver.Navigate().GoToUrl("https://www.amazon.com/?language=en_US&currency=USD");
 			//web1.Manage().Window.Maximize();
 		}
 

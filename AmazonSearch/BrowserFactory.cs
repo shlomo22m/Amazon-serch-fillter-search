@@ -34,23 +34,23 @@ namespace AmazonSearch
 				case "Firefox":
 					if (!Drivers.ContainsKey("FIREFOX"))
 					{
-						driver = new FirefoxDriver();
+						driver = new FirefoxDriver("D:\\Drivers\\");
 						Drivers.Add("Firefox", driver);
 					}
 					break;
 
-				case "IE":
-					if (!Drivers.ContainsKey("IE"))
+				case "Edge":
+					if (!Drivers.ContainsKey("Edge"))
 					{
-						driver = new InternetExplorerDriver(@"C:\PathTo\IEDriverServer");
-						Drivers.Add("IE", driver);
+						driver = new InternetExplorerDriver("D:\\Drivers\\");
+						Drivers.Add("Edge", driver);
 					}
 					break;
 
 				case "Chrome":
 					if (!Drivers.ContainsKey("CHROME"))
 					{
-						driver = new ChromeDriver(@"C:\PathTo\CHDriverServer");
+						driver = new ChromeDriver("D:\\Drivers\\");
 						Drivers.Add("Chrome", driver);
 					}
 					break;
@@ -58,10 +58,6 @@ namespace AmazonSearch
 			return driver;
 		}
 
-		public void LoadApplication(string url, string driverName)
-		{
-			Drivers[driverName].Url = url;
-		}
 	}
 }
 
