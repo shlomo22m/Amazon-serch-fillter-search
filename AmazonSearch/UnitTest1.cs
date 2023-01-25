@@ -45,7 +45,7 @@ namespace AmazonSearch
 
 			//creat a result list after filltering
 			List<Item> items =amazon.Pages.Results.GetResultBy(new Dictionary<string, string>() {
-				{ "Price_Lower_Then", "100" },{"Price_Hiegher_OR_Equal_Then", "10" },{"Free_Shipping", "true"}});
+				{ "Price_Lower_Then", "100" },{"Price_Hiegher_OR_Equal_Then", "50" },{"Free_Shipping", "true"}});
 
 			foreach (Item item in items)
 			{
