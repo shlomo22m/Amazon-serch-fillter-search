@@ -42,7 +42,7 @@ namespace AmazonSearch
 
 			List<IWebElement> elements = driver.FindElements(By.XPath(xpath)).ToList();
 			List<Item> items = new List<Item>();
-			//string url = elements[0].FindElement(By.XPath((".//a[@class='a-link-normal s-underline-text s-underline-link-text s-link-style a-text-normal']"))).GetAttribute("href");
+
 			foreach (IWebElement element in elements)
 			{
 				//the the title and the price and add it to the list

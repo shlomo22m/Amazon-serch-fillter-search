@@ -29,28 +29,29 @@ namespace AmazonSearch
 		}
 		public IWebDriver InitBrowser(string browserName)
 		{
-			switch (browserName)
+			switch (browserName.ToUpper())
 			{
-				case "Firefox":
+				
+				case "FIREFOX":
 					if (!Drivers.ContainsKey("FIREFOX"))
 					{
-						driver = new FirefoxDriver("D:\\Drivers\\");
+						driver = new FirefoxDriver();
 						Drivers.Add("Firefox", driver);
 					}
 					break;
 
-				case "Edge":
-					if (!Drivers.ContainsKey("Edge"))
+				case "EDGE":
+					if (!Drivers.ContainsKey("EDGE"))
 					{
 						driver = new InternetExplorerDriver("D:\\Drivers\\");
 						Drivers.Add("Edge", driver);
 					}
 					break;
 
-				case "Chrome":
+				case "CHROME":
 					if (!Drivers.ContainsKey("CHROME"))
 					{
-						driver = new ChromeDriver("D:\\Drivers\\");
+						driver = new ChromeDriver();
 						Drivers.Add("Chrome", driver);
 					}
 					break;
@@ -63,7 +64,7 @@ namespace AmazonSearch
 			foreach (var key in Drivers.Keys)
 			{
 				Drivers[key].Close();
-				Drivers[key].Quit();
+				//Drivers[key].Quit();
 			}
 		}
 
