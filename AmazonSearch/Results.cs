@@ -42,13 +42,14 @@ namespace AmazonSearch
 
 			List<IWebElement> elements = driver.FindElements(By.XPath(xpath)).ToList();
 			List<Item> items = new List<Item>();
-
+			//string url = elements[0].FindElement(By.XPath((".//a[@class='a-link-normal s-underline-text s-underline-link-text s-link-style a-text-normal']"))).GetAttribute("href");
 			foreach (IWebElement element in elements)
 			{
 				//the the title and the price and add it to the list
-				string title = element.FindElement(By.CssSelector(".a-size-medium.a-color-base.a-text-normal")).Text;
-				string price = element.FindElement(By.CssSelector(".a-price-whole")).Text + '.' + element.FindElement(By.CssSelector(".a-price-fraction")).Text + '$';
-				items.Add(new Item(title, price));
+				string title = element.FindElement(By.XPath((".//span[@class='a-size-medium a-color-base a-text-normal']"))).Text;
+				string price = element.FindElement(By.XPath(".//span[@class='a-price-whole']")).Text + '.' + element.FindElement(By.CssSelector(".a-price-fraction")).Text + '$';
+				string url = element.FindElement(By.XPath((".//a[@class='a-link-normal s-underline-text s-underline-link-text s-link-style a-text-normal']"))).GetAttribute("href");
+				items.Add(new Item(title, price,url));
 			}
 			return items;
 		}

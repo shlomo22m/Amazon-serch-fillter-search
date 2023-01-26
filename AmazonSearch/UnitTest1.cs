@@ -22,8 +22,6 @@ namespace AmazonSearch
 		Amazon amazon;
 		new Dictionary<string, string> itemfilter = new Dictionary<string, string>();
 
-
-
 		[SetUp]
 		public void Setup()
 		{
@@ -31,8 +29,6 @@ namespace AmazonSearch
 			//edge = browserFactory.InitBrowser("Edge");
 			edge = browserFactory.Drivers["Chrome"];
 			amazon = new Amazon(chrome);
-
-
 		}
 
 		[Test]
@@ -51,9 +47,9 @@ namespace AmazonSearch
 			{
 				Console.WriteLine(item.Title);
 				Console.WriteLine(item.Price + "\n");
+				Console.WriteLine(item.Url);
 			}
 			Assert.Pass();
-
 		}
 
 		[TearDown]

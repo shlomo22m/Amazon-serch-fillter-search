@@ -12,10 +12,11 @@ namespace AmazonSearch
 		private string price;
 		private string url;
 
-		public Item(string title, string price)
+		public Item(string title, string price,string url)
 		{
 			this.title = title;
 			this.price = price;
+			this.url = url;
 
 		}
 
@@ -31,6 +32,14 @@ namespace AmazonSearch
 			get
 			{
 				return this.price;
+			}
+		}
+
+		public string Url
+		{
+			get
+			{
+				return this.url;
 			}
 		}
 	}
