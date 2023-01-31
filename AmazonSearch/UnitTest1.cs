@@ -21,6 +21,8 @@ namespace AmazonSearch
 		BrowserFactory browserFactory = new BrowserFactory();
 		IWebDriver chrome;
 		IWebDriver firefox;
+
+		//create a Dictionary for fillter
 		Dictionary<string, string> itemlist= new Dictionary<string, string>() {
 				{ "Price_Lower_Then", "100" },{"Price_Hiegher_OR_Equal_Then", "10" },{"Free_Shipping", "true"}};
 		Amazon amazon;
@@ -28,16 +30,23 @@ namespace AmazonSearch
 		[SetUp]
 		public void Setup()
 		{
-			 //itemlist = new Dictionary<string, string>() {
-				//{ "Price_Lower_Then", "100" },{"Price_Hiegher_OR_Equal_Then", "10" },{"Free_Shipping", "true"}};
+			//create a chrome driver
+			chrome = browserFactory.InitBrowser("Chrome");
+			chrome = browserFactory.Drivers["Chrome"];
+
+			//create a firefox driver
+			firefox = browserFactory.InitBrowser("FireFox");
+			firefox = browserFactory.Drivers["Firefox"];
 		}
 
 		[Test]
 		public void ChromeTest()
 		{
-			chrome = browserFactory.InitBrowser("Chrome");
-			chrome = browserFactory.Drivers["Chrome"];
+
+
+
 			amazon = new Amazon(chrome);
+
 			//search product
 			amazon.Pages.Home.SearchBar.Text = "mouse";
 			amazon.Pages.Home.SearchBar.Click();
@@ -45,6 +54,7 @@ namespace AmazonSearch
 			//creat a result list after filltering
 			List<Item> items =amazon.Pages.Results.GetResultBy(itemlist);
 
+			//display search resulr
 			foreach (Item item in items)
 			{
 				Console.WriteLine(item.Title);
@@ -57,9 +67,9 @@ namespace AmazonSearch
 		[Test]
 		public void FirefoxTest()
 		{
-			firefox = browserFactory.InitBrowser("FireFox");
-			firefox = browserFactory.Drivers["Firefox"];
+			
 			amazon = new Amazon(firefox);
+
 			//search product
 			amazon.Pages.Home.SearchBar.Text = "mouse";
 			amazon.Pages.Home.SearchBar.Click();
@@ -67,6 +77,8 @@ namespace AmazonSearch
 			//creat a result list after filltering
 			List<Item> items = amazon.Pages.Results.GetResultBy(itemlist);
 
+
+			//display search resulr
 			foreach (Item item in items)
 			{
 				Console.WriteLine(item.Title);
@@ -79,6 +91,7 @@ namespace AmazonSearch
 		[TearDown]
 		public void closeBrowser()
 		{
+			//close web drivers
 			browserFactory.CloseAllDrivers();
 		}
 

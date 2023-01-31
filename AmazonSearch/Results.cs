@@ -11,14 +11,26 @@ namespace AmazonSearch
 {
 	internal class Results
 	{
-		//private List<IWebElement> elements = new List<IWebElement>();
 		private string xpath = "//div[@class='a-section a-spacing-small a-spacing-top-small'";
 		private IWebDriver driver;
+		private Fillter fillter;
 		public Results(IWebDriver driver) 
 		{
 			this.driver = driver;
 		}
 
+
+		public Fillter Fillter
+		{
+			get
+			{
+				if (this.fillter == null)
+				{
+					this.fillter = new Fillter(this.driver);
+				}
+				return this.fillter;
+			}
+		}
 		public List<Item> GetResultBy(Dictionary<string,string> filter) 
 		{
 			//preform our fillter search
@@ -34,13 +46,19 @@ namespace AmazonSearch
 						break;
 					case "Free_Shipping":
 						if (filterxpath.Value == "true") xpath += " and descendant::span[contains(text(), 'FREE')]";
+
+						else
+							if (filterxpath.Value == "true") xpath += " and descendant::span[not(contains(text(), 'FREE'))]";
 						break;
 				}
 			}
 			xpath += "]";    
 			
 
+			//create a web elements list that save the result
 			List<IWebElement> elements = driver.FindElements(By.XPath(xpath)).ToList();
+
+			//list that we use to save title price and url
 			List<Item> items = new List<Item>();
 
 			foreach (IWebElement element in elements)
